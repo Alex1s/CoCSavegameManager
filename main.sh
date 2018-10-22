@@ -100,6 +100,10 @@ function writeDef {
 #main function
 function mainmain {
 clear 
+if [ ! "$(whoami)" == "root" ]; then
+	echo "ERROR! You need to run this tool as root, so it has permissions to write into the keychain-2.db file."
+	exit
+fi
 echo "Welcome to the CoC savegame manager BETA 2.0!"
 echo "Developed by Alexis aka superusername."
 echo "For questions, help or problems please contact me here: http://goo.gl/lUBK6X"
@@ -357,6 +361,10 @@ if [ "$NUMBERS" == "6" ]; then
 	sleep 3
 	cat > $SCRIPTPATH <<EOS
 function main {
+if [ ! "\$(whoami)" == "root" ]; then
+	echo "ERROR! You need to run this tool as root, so it has permissions to write into the keychain-2.db file."
+	exit
+fi
 #check if savegame a is loaded; if so load savegame b
 if [ "$(cat ClashSaves/$SAVEGAMENAMEA/Pass_PROD2.alexis)" == "\$(sqlite3 /var/Keychains/keychain-2.db "SELECT quote(data) FROM genp WHERE rowid = $ROWID4PASS_PROD2")" ]; then
 	loadB
