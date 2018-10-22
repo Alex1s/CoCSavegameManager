@@ -1,16 +1,13 @@
 #!/bin/bash
-echo "developed by alexis aka superusername"
-echo "for questions, help or problems please contact me here: "
 
 #VARIABLES
-
 CLASHSAVESFOLDER="false"
 DEFAULTSFOLDER="false"
 SAVEGAMEFOLDER="false"
 
 #general functions
 function backtomain {
-	read -n1 -r -p "Press any key to get back in the main menu..." ANYKEY
+	read -n1 -r -p "Please press any key to get back in the main menu..." ANYKEY
 	mainmain
 }
 function clashsavesfolder {
@@ -53,7 +50,7 @@ function savegamefolder {
 
 function mainmain {
 clear 
-echo "Welcome to the CoC savegame manager BETA 1!
+echo "Welcome to the CoC savegame manager BETA 1.1!
 Developed by Alexis aka superusername.
 For questions, help or problems please contact me here: http://goo.gl/lUBK6X
 Be warned: I don't take any responsibility if this will brick, burn or harm your device in any other way!
@@ -77,9 +74,10 @@ read numbers
 if [ $numbers == 1 ]; then
 	#this shows a list of the savegames
 	clear
-	echo "This is a list of all the savegames created:"
+	echo "Below is a list of all the savegames available to load:"
+	echo "——————————————————"
 	ls -1 ClashSaves
-	echo ""
+	echo "——————————————————"
 	backtomain
 fi
 
@@ -87,7 +85,7 @@ if [ $numbers == 2 ]; then
 	clear
 	#General Info
 	echo "To create a savegame you have to enter your the specific rowids."
-	echo "Rowids only change if you change your account via gamecenter."
+	echo "Rowids only change if you change your account via gamecenter or you created a new one with this script."
 	echo "To select the default rowid just press [ENTER] without typing anything"
 	echo "——————————————————"
 	#read name of the savegame to create
@@ -117,7 +115,7 @@ if [ $numbers == 2 ]; then
 	#show all information entered
 	clear
 	echo "You have entered all the information needed."
-	echo "Here you can see the Information you entered:"
+	echo "Here you can see the information you entered:"
 	echo "——————————"
 	echo "name of your savegame: $SAVEGAMENAME"
 	echo "rowid for Pass_PROD2 : $ROWID4PASS_PROD2WRITE"
@@ -162,43 +160,43 @@ if [ $numbers == 3 ]; then
 	clear
 	#lists all the savegames availible
 	echo "Please type one of the savegames listed below to load it:"
+	echo "——————————"
 	ls -1 ClashSaves
-	echo ""
-
-	#checks if the folder of the savegame exist
+	echo "——————————"
 	read -p "Please enter the name of the savegame here (case sensitive):" savegamename
-	echo "$savegamename"
+	
+	#checks if the folder of the savegame exist
 	if [ -d ClashSaves/$savegamename ]; then 
 		#checks if all files exist 
 		if [ -a ClashSaves/$savegamename/Pass_PROD2.alexis ] && [ -a ClashSaves/$savegamename/High_PROD2.alexis ] && [ -a ClashSaves/$savegamename/Low_PROD2.alexis ]; then
 			#collects all the information needed to load the savegame
 			clear
 			echo "To load a savegame you have to enter your the specific rowids."
-			echo "Rowids only change if you change your account via gamecenter."
+			echo "Rowids only change if you change your account via gamecenter or create a new one with this script."
 			echo "To select the default rowid just press [ENTER] without typing anything"
 			echo "——————————"
 			#read rowid for Pass_PRDO2
-			read -p "Pleas enter the rowid for PassProd2 (default: $DEFAULTPASSPROD2) " ROWID4PASS_PROD2LOAD
+			read -p "Pleas enter the rowid for Pass_PROD2 (default: $DEFAULTPASSPROD2):" ROWID4PASS_PROD2LOAD
 			ROWID4PASS_PROD2LOAD=${ROWID4PASS_PROD2LOAD:-$DEFAULTPASSPROD2}
 			clear
 
 			#read rowid for High_PROD2
 			echo "For Pass_PROD2 the rowid \"$ROWID4PASS_PROD2LOAD\" is saved in temp. memory."
 			echo "——————————"
-			read -p "Pleas enter the rowid for HighProd2 (default: $DEFAULTHIGHPROD2) " ROWID4HIGH_PROD2LOAD
+			read -p "Pleas enter the rowid for High_PROD2 (default: $DEFAULTHIGHPROD2):" ROWID4HIGH_PROD2LOAD
 			ROWID4HIGH_PROD2LOAD=${ROWID4HIGH_PROD2LOAD:-$DEFAULTHIGHPROD2}
 			clear
 
 			#read rowid for Low_PROD2
 			echo "For High_PROD2 the rowid \"$ROWID4HIGH_PROD2LOAD\" is saved in temp. memory."
 			echo "——————————"
-			read -p "Pleas enter the rowid for LowProd2 (default: $DEFAULTLOWPROD2) " ROWID4LOW_PROD2LOAD
+			read -p "Pleas enter the rowid for Low_PROD2 (default: $DEFAULTLOWPROD2):" ROWID4LOW_PROD2LOAD
 			ROWID4LOW_PROD2LOAD=${ROWID4LOW_PROD2LOAD:-$DEFAULTLOWPROD2}
 			clear
 
 			#show all the information entered
 			echo "You have entered all the information needed."
-			echo "Below you can see the Information you entered:"
+			echo "Below you can see the information you entered:"
 			echo "——————————"
 			echo "name of your savegame: $savegamename"
 			echo "rowid for Pass_PROD2 : $ROWID4PASS_PROD2LOAD"
@@ -207,7 +205,7 @@ if [ $numbers == 3 ]; then
 			echo "——————————"
 			#ask for verification
 			echo "Loading a savegame will overwrite your current account."
-			echo "Make sure your village is somehow backuped."
+			echo "Make sure your current village is somehow backuped."
 			read -r -p "Are you sure you want to load the savegame \"$savegamename\"? [y/N] " response
 			case $response in
 			    [yY][eE][sS]|[yY]) 
@@ -226,7 +224,7 @@ if [ $numbers == 3 ]; then
 					#...for High_PROD2
 					echo "$ROWID4HIGH_PROD2LOAD" > defaults/High_PROD2
 					#...for Low_PROD2
-					echo "$ROWID4LOW_PROD2LOAD" > defaults/Low_Prod2
+					echo "$ROWID4LOW_PROD2LOAD" > defaults/Low_PROD2
 
 					echo "Savegame loaded. See above if any erorrs happened."
 					backtomain
@@ -241,7 +239,7 @@ if [ $numbers == 3 ]; then
 		else
 			#error message that savegame is incomplete
 			clear
-			echo "The savegame \"$savegamename\" is incomplete and cant be loaded :/"
+			echo "The savegame \"$savegamename\" is incomplete and cant be loaded."
 			backtomain
 		fi
 	else
@@ -254,17 +252,18 @@ fi
 if [ $numbers == 4 ]; then 
 	clear
 	echo "Here you can delete a savegame. A list of your savegames is below:"
+	echo "——————————"
 	ls -1 ClashSaves
-	echo ""
-	read -p "Please type the name of the savegame you want to delete below (case sensitive):" SAVEGAMENAMEDELETE
+	echo "——————————"
+	read -p "Please type the name of the savegame you want to delete (case sensitive):" SAVEGAMENAMEDELETE
 	savegamefolder
-	if [ "$SAVEGAMEFOLDER" == true ]; then
+	if [ "$SAVEGAMEFOLDER" == "true" ]; then
 		clear
 		echo "Are you sure you want to delete the savegame \"$SAVEGAMENAMEDELETE\"?"
 		echo "Please wait 10 seconds before you proceed..."
 		sleep 10
 
-		read -r -p "Are you sure you want to delete your current account? [y/N] " response
+		read -r -p "Are you sure you want to delete the savegame \"$SAVEGAMENAMEDELETE\"? [y/N]" response
 		case $response in
 		    [yY][eE][sS]|[yY]) 
 				clear
@@ -291,7 +290,7 @@ if [ $numbers == 5 ]; then
 	echo "Are you sure you want to delete your current account to start a new one?"
 	echo "If you have created a savegame of your current account you can load that to restore your account,"
 	echo "but its more secure if you created a real Backup with iTunes, iCloud or GameCenter before you proceed!"
-	echo "Wait 10 seconds before you proceed..."
+	echo "Please wait 10 seconds before you proceed..."
 	sleep 10
 	
 	read -r -p "Are you sure you want to delete your current account? [y/N] " response
