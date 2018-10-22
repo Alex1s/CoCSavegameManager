@@ -39,7 +39,7 @@ function defaultsfolder {
 }
 function savegamefolder {
 	#sets SAVEGAMEFOLDER variable correct 
-	if [ -d CLashSaves/$SAVEGAMENAMEDELETE ]; then
+	if [ -d ClashSaves/$SAVEGAMENAMEDELETE ]; then
 		SAVEGAMEFOLDER="true"
 	else
 		SAVEGAMEFOLDER="false"
@@ -50,7 +50,7 @@ function savegamefolder {
 
 function mainmain {
 clear 
-echo "Welcome to the CoC savegame manager BETA 1.1!
+echo "Welcome to the CoC savegame manager BETA 1.2!
 Developed by Alexis aka superusername.
 For questions, help or problems please contact me here: http://goo.gl/lUBK6X
 Be warned: I don't take any responsibility if this will brick, burn or harm your device in any other way!
